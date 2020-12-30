@@ -29,6 +29,10 @@ namespace MetodyNumeryczneProjektZaliczeniowy
             return result;
         }
 
+        string[] calculateDerivative(string[] functionParameters)
+        {
+            return functionParameters;
+        }
 
 
         private void calculateButton_Click(object sender, EventArgs e)
