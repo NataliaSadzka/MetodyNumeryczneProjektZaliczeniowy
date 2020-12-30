@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetodyNumeryczneProjektZaliczeniowy", "MetodyNumeryczneProjektZaliczeniowy\MetodyNumeryczneProjektZaliczeniowy.csproj", "{FC5A91D6-CB58-4B53-BA19-080B83A08C0D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC5A91D6-CB58-4B53-BA19-080B83A08C0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC5A91D6-CB58-4B53-BA19-080B83A08C0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC5A91D6-CB58-4B53-BA19-080B83A08C0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC5A91D6-CB58-4B53-BA19-080B83A08C0D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E5BF0ADF-87F4-4C42-B078-A8E95F0FA9A4}
+	EndGlobalSection
+EndGlobal
