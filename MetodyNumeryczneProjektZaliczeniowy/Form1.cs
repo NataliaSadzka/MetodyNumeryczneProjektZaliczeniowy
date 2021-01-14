@@ -17,7 +17,7 @@ namespace MetodyNumeryczneProjektZaliczeniowy
             InitializeComponent();
         }
 
-        decimal CalculateFunctionValueAtX(decimal[] functionParameters, decimal pointX)
+        public static decimal CalculateFunctionValueAtX(decimal[] functionParameters, decimal pointX)
         {
             decimal result = 0.0m;
             for(int i = 0; i < functionParameters.Length; i++)
@@ -27,7 +27,7 @@ namespace MetodyNumeryczneProjektZaliczeniowy
             return result;
         }
 
-        decimal[] CalculateDerivative(decimal[] functionParameters)
+        public decimal[] CalculateDerivative(decimal[] functionParameters)
         {
             decimal[] result = new decimal[functionParameters.Length - 1];
           
@@ -38,7 +38,7 @@ namespace MetodyNumeryczneProjektZaliczeniowy
             return result;
         }
 
-        decimal CalculateZeroPlace(decimal[] functionParameters, decimal startPointX, decimal epsilon, decimal delta, int iterations)
+        public decimal CalculateZeroPlace(decimal[] functionParameters, decimal startPointX, decimal epsilon, decimal delta, int iterations)
         {
             logRichTextBox.Text += "Rozpoczęto obliczenia \n";
             logRichTextBox.Text += "Funkcja wejściowa " + String.Join(";", functionParameters) + "\n";
@@ -124,5 +124,7 @@ namespace MetodyNumeryczneProjektZaliczeniowy
             O_programie O_Programie = new O_programie();
             O_Programie.Show();
         }
+
+        
     }
 }

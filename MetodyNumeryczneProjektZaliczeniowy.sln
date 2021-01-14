@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetodyNumeryczneProjektZaliczeniowy", "MetodyNumeryczneProjektZaliczeniowy\MetodyNumeryczneProjektZaliczeniowy.csproj", "{FC5A91D6-CB58-4B53-BA19-080B83A08C0D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetodyNumeryczneProjektZaliczeniowyTest", "MetodyNumeryczneProjektZaliczeniowyTest\MetodyNumeryczneProjektZaliczeniowyTest.csproj", "{212305C9-C37A-47F2-AD17-C88A438A5617}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{FC5A91D6-CB58-4B53-BA19-080B83A08C0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC5A91D6-CB58-4B53-BA19-080B83A08C0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC5A91D6-CB58-4B53-BA19-080B83A08C0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{212305C9-C37A-47F2-AD17-C88A438A5617}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{212305C9-C37A-47F2-AD17-C88A438A5617}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{212305C9-C37A-47F2-AD17-C88A438A5617}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{212305C9-C37A-47F2-AD17-C88A438A5617}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -53,6 +53,7 @@
             this.parametersTextBox.Name = "parametersTextBox";
             this.parametersTextBox.Size = new System.Drawing.Size(115, 22);
             this.parametersTextBox.TabIndex = 1;
+           
             // 
             // labelPodajWielomian
             // 
@@ -183,7 +184,7 @@
             // oProgramieToolStripMenuItem
             // 
             this.oProgramieToolStripMenuItem.Name = "oProgramieToolStripMenuItem";
-            this.oProgramieToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.oProgramieToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
             this.oProgramieToolStripMenuItem.Text = "O programie";
             this.oProgramieToolStripMenuItem.Click += new System.EventHandler(this.oProgramieToolStripMenuItem_Click);
             // 
