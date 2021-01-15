@@ -12,7 +12,9 @@ namespace MetodyNumeryczneProjektZaliczeniowyTest
         {
             decimal[] functionParameters = new decimal[] { 2.0m, 1.0m };
             decimal x = 0.0m;
-            decimal result = Form1.CalculateFunctionValueAtX(functionParameters, x);
+            Form1 form = new Form1();
+
+            decimal result = form.CalculateFunctionValueAtX(functionParameters, x);
 
             Assert.AreEqual(1.0m, result);
         }
@@ -22,7 +24,9 @@ namespace MetodyNumeryczneProjektZaliczeniowyTest
         {
             decimal[] functionParameters = new decimal[] { 4.0m, 3.0m, 2.0m, 3.0m };
             decimal x = 1.0m;
-            decimal result = Form1.CalculateFunctionValueAtX(functionParameters, x);
+            Form1 form = new Form1();
+
+            decimal result = form.CalculateFunctionValueAtX(functionParameters, x);
 
             Assert.AreEqual(12.0m, result);
         }
@@ -32,7 +36,9 @@ namespace MetodyNumeryczneProjektZaliczeniowyTest
         {
             decimal[] functionParameters = new decimal[] { 2.0m, 4.0m, 6.0m };
             decimal x = 2.0m;
-            decimal result = Form1.CalculateFunctionValueAtX(functionParameters, x);
+            Form1 form = new Form1();
+
+            decimal result = form.CalculateFunctionValueAtX(functionParameters, x);
 
             Assert.AreEqual(22.0m, result);
         }
@@ -69,7 +75,7 @@ namespace MetodyNumeryczneProjektZaliczeniowyTest
         {
             decimal[] functionParameters = new decimal[] { -3.0m, 2.0m, 4.0m };
             decimal startPointX = 1.4m;
-            decimal epsilon = 0.000001m;
+            decimal epsilon = 0.001m;
             decimal delta = 0.000001m;
             int iterations = 100;
             Form1 form = new Form1();
@@ -85,7 +91,7 @@ namespace MetodyNumeryczneProjektZaliczeniowyTest
             decimal[] functionParameters = new decimal[] { -4.0m, 9.0m, 3.0m };
             decimal startPointX = 1.5m;
             decimal epsilon = 0.000001m;
-            decimal delta = 0.000001m;
+            decimal delta = 0.001m;
             int iterations = 100;
             Form1 form = new Form1();
 
