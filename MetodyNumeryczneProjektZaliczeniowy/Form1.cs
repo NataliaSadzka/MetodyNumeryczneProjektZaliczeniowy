@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MetodyNumeryczneProjektZaliczeniowy
@@ -117,6 +110,20 @@ namespace MetodyNumeryczneProjektZaliczeniowy
 
             return x0;     
         }
+         
+        public bool IsResultCorrect(decimal[]functionParameters, decimal zeroPlace, decimal epsilon)
+        {
+            decimal result = CalculateFunctionValueAtX(functionParameters, zeroPlace);
+
+            if(Math.Abs(result) < epsilon)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }            
+        }
 
         /**
          * Metoda do rozpoczęcia obliczeń
@@ -131,6 +138,7 @@ namespace MetodyNumeryczneProjektZaliczeniowy
             decimal pointX = Decimal.Parse(pointXTextBox.Text);
 
             decimal zeroPlace = CalculateZeroPlace(functionParameters, pointX, epsilon, delta, iterations);
+            zeroPlaceTextBox.Text = zeroPlace.ToString();
         }
 
         /**
@@ -152,6 +160,23 @@ namespace MetodyNumeryczneProjektZaliczeniowy
         {
             O_programie O_Programie = new O_programie();
             O_Programie.Show();
-        }    
+        }
+
+        private void IsCorrectButton_Click(object sender, EventArgs e)
+        {
+            decimal[] functionParameters = Array.ConvertAll(parametersTextBox.Text.Split(';'), Decimal.Parse);
+            decimal zeroPlace = Decimal.Parse(zeroPlaceTextBox.Text);
+            decimal epsilon = Decimal.Parse(epsilonTextBox.Text);
+            bool correctResult = IsResultCorrect(functionParameters, zeroPlace, epsilon);
+
+            if(correctResult)
+            {
+                MessageBox.Show("Miejsce zerowe jest poprawne");
+            }
+            else
+            {
+                MessageBox.Show("Miejsce zerowe nie spełnia kryterium poprawności");
+            }
+        }
     }
 }

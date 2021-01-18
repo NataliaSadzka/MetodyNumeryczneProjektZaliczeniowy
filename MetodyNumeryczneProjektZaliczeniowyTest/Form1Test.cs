@@ -99,5 +99,33 @@ namespace MetodyNumeryczneProjektZaliczeniowyTest
 
             Assert.AreEqual(2.5447271722282598013745554193m, result);
         }
+
+        [TestMethod]
+        public void TestIsResultCorrectTrue()
+        {
+            decimal[] functionParameters = new decimal[] { 1.0m, 0.0m, -4.0m };
+            decimal zeroPlace = 2.000001m;
+            decimal epsilon = 0.01m;
+
+            Form1 form = new Form1();
+
+            bool result = form.IsResultCorrect(functionParameters, zeroPlace, epsilon);
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void TestIsResultCorrectFalse()
+        {
+            decimal[] functionParameters = new decimal[] { 1.0m, 0.0m, 1.0m };
+            decimal zeroPlace = 2.0m;
+            decimal epsilon = 0.000001m;
+
+            Form1 form = new Form1();
+
+            bool result = form.IsResultCorrect(functionParameters, zeroPlace, epsilon);
+
+            Assert.IsFalse(result);
+        }
     }
 }

@@ -44,6 +44,9 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.pomocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oProgramieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label4 = new System.Windows.Forms.Label();
+            this.zeroPlaceTextBox = new System.Windows.Forms.TextBox();
+            this.IsCorrectButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,7 +56,6 @@
             this.parametersTextBox.Name = "parametersTextBox";
             this.parametersTextBox.Size = new System.Drawing.Size(115, 22);
             this.parametersTextBox.TabIndex = 1;
-           
             // 
             // labelPodajWielomian
             // 
@@ -100,7 +102,7 @@
             // 
             // calculateButton
             // 
-            this.calculateButton.Location = new System.Drawing.Point(187, 273);
+            this.calculateButton.Location = new System.Drawing.Point(151, 318);
             this.calculateButton.Name = "calculateButton";
             this.calculateButton.Size = new System.Drawing.Size(75, 35);
             this.calculateButton.TabIndex = 7;
@@ -146,7 +148,7 @@
             // 
             // resetButton
             // 
-            this.resetButton.Location = new System.Drawing.Point(289, 273);
+            this.resetButton.Location = new System.Drawing.Point(354, 318);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(75, 35);
             this.resetButton.TabIndex = 12;
@@ -188,12 +190,42 @@
             this.oProgramieToolStripMenuItem.Text = "O programie";
             this.oProgramieToolStripMenuItem.Click += new System.EventHandler(this.oProgramieToolStripMenuItem_Click);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(154, 276);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(108, 17);
+            this.label4.TabIndex = 16;
+            this.label4.Text = "Miejsce zerowe:";
+            // 
+            // zeroPlaceTextBox
+            // 
+            this.zeroPlaceTextBox.Location = new System.Drawing.Point(289, 273);
+            this.zeroPlaceTextBox.Name = "zeroPlaceTextBox";
+            this.zeroPlaceTextBox.ReadOnly = true;
+            this.zeroPlaceTextBox.Size = new System.Drawing.Size(115, 22);
+            this.zeroPlaceTextBox.TabIndex = 17;
+            // 
+            // IsCorrectButton
+            // 
+            this.IsCorrectButton.Location = new System.Drawing.Point(249, 318);
+            this.IsCorrectButton.Name = "IsCorrectButton";
+            this.IsCorrectButton.Size = new System.Drawing.Size(83, 35);
+            this.IsCorrectButton.TabIndex = 18;
+            this.IsCorrectButton.Text = "Sprawdź";
+            this.IsCorrectButton.UseVisualStyleBackColor = true;
+            this.IsCorrectButton.Click += new System.EventHandler(this.IsCorrectButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(917, 536);
+            this.Controls.Add(this.IsCorrectButton);
+            this.Controls.Add(this.zeroPlaceTextBox);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.logRichTextBox);
             this.Controls.Add(this.resetButton);
             this.Controls.Add(this.iterationsTextBox);
@@ -235,6 +267,9 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem pomocToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem oProgramieToolStripMenuItem;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox zeroPlaceTextBox;
+        private System.Windows.Forms.Button IsCorrectButton;
     }
 }
 
