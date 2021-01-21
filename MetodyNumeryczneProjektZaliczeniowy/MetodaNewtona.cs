@@ -1,13 +1,18 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MetodyNumeryczneProjektZaliczeniowy
 {
-    public partial class Form1 : Form
+    public partial class MetodaNewtona : Form
     {
-        public Form1()
+        private Wykres wykres;
+
+        public MetodaNewtona()
         {
             InitializeComponent();
+            wykres = new Wykres();
         }
 
         /**
@@ -27,7 +32,6 @@ namespace MetodyNumeryczneProjektZaliczeniowy
             return result;
         }
 
-
         /**
          * Metoda do wyznaczania pochodnej funkcji
          * 
@@ -46,12 +50,32 @@ namespace MetodyNumeryczneProjektZaliczeniowy
         }
 
         /**
+         * Metoda do wyznaczania stycznej 
+         * 
+         * @param derivativeFunctionParameters tablica zawierająca parametry pochodnej
+         * @param pointX współrzędna x pochodnej
+         * @param pointY współrzędna y pochodnej
+         * @return wartość stycznej
+         */
+        public decimal[] CalculateTangent(decimal[] derivativeFunctionParameters, decimal pointX, decimal pointY)
+        {
+            decimal[] result = new decimal[2];
+
+            decimal derivativeValue = CalculateFunctionValueAtX(derivativeFunctionParameters, pointX);
+            result[0] = derivativeValue;
+
+            result[1] = pointY - derivativeValue * pointX;
+
+            return result;
+        }
+
+        /**
          * Metoda do wyznaczania miejsca zerowego
          * 
          * @param functionParameters tablica zawierająca parametry wielomianu
          * @param x0 punkt startowy
          * @param epsilon dokładność porównania z zerem
-         * @param epsilon dokładność wyznaczania pierwiastka
+         * @param delta dokładność wyznaczania pierwiastka
          * @param iterations maksymalna wartość iteracji jaką program może wykonać
          * @return wartość miejsca zerowego
          */
@@ -78,8 +102,13 @@ namespace MetodyNumeryczneProjektZaliczeniowy
                 numberOfIteration += 1;
                 logRichTextBox.Text += "Numer iteracji " + numberOfIteration + "\n";
 
-                decimal fX1 = CalculateFunctionValueAtX(CalculateDerivative(functionParameters), x0);
+                decimal[] derivativeParamters = CalculateDerivative(functionParameters);
+                decimal fX1 = CalculateFunctionValueAtX(derivativeParamters, x0);
                 logRichTextBox.Text += "Pochodna funkcji w potencjalnym miejscu zerowym " + fX1 + "\n";
+
+                decimal[] tangentParameters = CalculateTangent(derivativeParamters, x0, fX0);
+                Series series = prepareTangentSeries(tangentParameters, x0, "Styczna " + numberOfIteration);
+                wykres.DrawFunctionChart(series);
 
                 if (Math.Abs(fX1) < delta) //sprawdzenie czy wartość funkcji od bieżącego przybliżenia miejsca zerowego jest mniejsza od przyjętej wartości delty
                 {
@@ -94,6 +123,7 @@ namespace MetodyNumeryczneProjektZaliczeniowy
                 fX0 = CalculateFunctionValueAtX(functionParameters, x0);
 
                 logRichTextBox.Text += "Wartość funkcji w potencjalnym miejscu zerowym " + fX0 + "\n";
+                wykres.DrawPoint(x0, fX0);
 
                 iterations = iterations - 1;
                 logRichTextBox.Text += "Pozostało iteracji " + iterations + "\n";
@@ -107,10 +137,19 @@ namespace MetodyNumeryczneProjektZaliczeniowy
             logRichTextBox.Text += "\n";
             logRichTextBox.Text += "Zakończono obliczenia " + "\n";
             logRichTextBox.Text += "Miejsce zerowe to " + x0 + "\n";
+            wykres.DrawZeroPlace(x0, fX0);
 
             return x0;     
         }
-         
+
+        /**
+         * Metoda sprawdzająca czy miejsce zerowe jest poprawne zgodnie z zadaną dokładnością
+         * 
+         * @param functionParameters tablica zawierająca parametry wielomianu
+         * @param zeroPlace miejsce zerowe
+         * @param epsilon dokładność porównania z zerem
+         * @return poprawność miejsca zerowego
+         */
         public bool IsResultCorrect(decimal[]functionParameters, decimal zeroPlace, decimal epsilon)
         {
             decimal result = CalculateFunctionValueAtX(functionParameters, zeroPlace);
@@ -126,19 +165,65 @@ namespace MetodyNumeryczneProjektZaliczeniowy
         }
 
         /**
+         * Metoda
+         * @param functionParameters tablica zawierająca parametry wielomianu
+         * @param startingPointX punkt startowy
+         * @param seriesName nazwa serii
+         * @return seria danych do narysowania funkcji
+         */
+        public Series prepareChartSeries(decimal[] functionParameters, decimal startingPointX, string seriesName)
+        {
+            Series series = new Series(seriesName);
+            for (decimal i = startingPointX - 5.0m; i < startingPointX + 5.0m; i = i + 0.5m)
+            {
+                series.Points.Add(new DataPoint((double) i, (double) CalculateFunctionValueAtX(functionParameters, i)));
+            }
+            return series;
+        }
+
+        /**
+         * Metoda do przygotowania serii danych do rysowania stycznej w punkcie
+         * @param functionParameters tablica zawierająca parametry wielomianu
+         * @param startingPointX punkt startowy
+         * @param seriesName nazwa serii
+         * @return seria danych dla stycznej
+         */
+        public Series prepareTangentSeries(decimal[] functionParameters, decimal startingPointX, string seriesName)
+        {
+            Series series = new Series(seriesName);
+            series.Color = Color.Red;
+            for (decimal i = startingPointX - 1.0m; i < startingPointX + 1.0m; i = i + 0.5m)
+            {
+                series.Points.Add(new DataPoint((double)i, (double)CalculateFunctionValueAtX(functionParameters, i)));
+            }
+            return series;
+        }
+
+        /**
          * Metoda do rozpoczęcia obliczeń
          */
         private void calculateButton_Click(object sender, EventArgs e)
         {
-            decimal epsilon = Decimal.Parse(epsilonTextBox.Text);
-            decimal delta = Decimal.Parse(deltaTextBox.Text);
-            int iterations = Int32.Parse(iterationsTextBox.Text);
+            try //obsługa błędów wprowadzanych danych
+            {
+                decimal epsilon = Decimal.Parse(epsilonTextBox.Text);
+                decimal delta = Decimal.Parse(deltaTextBox.Text);
+                int iterations = Int32.Parse(iterationsTextBox.Text);
+                decimal[] functionParameters = Array.ConvertAll(parametersTextBox.Text.Split(';'), Decimal.Parse);
+                decimal pointX = Decimal.Parse(pointXTextBox.Text);
+                decimal zeroPlace = CalculateZeroPlace(functionParameters, pointX, epsilon, delta, iterations);
+                zeroPlaceTextBox.Text = zeroPlace.ToString();
+                
+                Series functionChartSeries = prepareChartSeries(functionParameters, pointX, "funkcja f(x)");
 
-            decimal[] functionParameters = Array.ConvertAll(parametersTextBox.Text.Split(';'), Decimal.Parse);
-            decimal pointX = Decimal.Parse(pointXTextBox.Text);
-
-            decimal zeroPlace = CalculateZeroPlace(functionParameters, pointX, epsilon, delta, iterations);
-            zeroPlaceTextBox.Text = zeroPlace.ToString();
+                wykres.DrawFunctionChart(functionChartSeries);
+                wykres.Show();
+            }
+            catch (Exception ex)
+            {
+            ObslugaBledow Uwaga = new ObslugaBledow();
+            Uwaga.Show();
+            }
         }
 
         /**
@@ -151,6 +236,7 @@ namespace MetodyNumeryczneProjektZaliczeniowy
             epsilonTextBox.Text = "0,000001";
             deltaTextBox.Text = "0,000001";
             iterationsTextBox.Text = "100";
+            zeroPlaceTextBox.Clear();
         }
 
         /**
@@ -162,6 +248,9 @@ namespace MetodyNumeryczneProjektZaliczeniowy
             O_Programie.Show();
         }
 
+        /**
+         * Metoda wywołana po kliknięciu przycisku Sprawdź
+         */
         private void IsCorrectButton_Click(object sender, EventArgs e)
         {
             decimal[] functionParameters = Array.ConvertAll(parametersTextBox.Text.Split(';'), Decimal.Parse);
@@ -177,6 +266,15 @@ namespace MetodyNumeryczneProjektZaliczeniowy
             {
                 MessageBox.Show("Miejsce zerowe nie spełnia kryterium poprawności");
             }
+        }
+
+        /**
+         * Metoda pokazująca okno ze schematem do wprowadzania danych
+         */
+        private void SchematWprowadzaniaDanychToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SchematObsługiBledow schematObslugiBledow = new SchematObsługiBledow();
+            schematObslugiBledow.Show();
         }
     }
 }

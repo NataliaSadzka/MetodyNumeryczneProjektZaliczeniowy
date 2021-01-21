@@ -1,6 +1,6 @@
 ﻿namespace MetodyNumeryczneProjektZaliczeniowy
 {
-    partial class Form1
+    partial class MetodaNewtona
     {
         /// <summary>
         /// Wymagana zmienna projektanta.
@@ -44,6 +44,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.pomocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oProgramieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.schematWprowadzaniaDanychToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label4 = new System.Windows.Forms.Label();
             this.zeroPlaceTextBox = new System.Windows.Forms.TextBox();
             this.IsCorrectButton = new System.Windows.Forms.Button();
@@ -178,7 +179,8 @@
             // pomocToolStripMenuItem
             // 
             this.pomocToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.oProgramieToolStripMenuItem});
+            this.oProgramieToolStripMenuItem,
+            this.schematWprowadzaniaDanychToolStripMenuItem});
             this.pomocToolStripMenuItem.Name = "pomocToolStripMenuItem";
             this.pomocToolStripMenuItem.Size = new System.Drawing.Size(68, 24);
             this.pomocToolStripMenuItem.Text = "Pomoc";
@@ -186,9 +188,16 @@
             // oProgramieToolStripMenuItem
             // 
             this.oProgramieToolStripMenuItem.Name = "oProgramieToolStripMenuItem";
-            this.oProgramieToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
+            this.oProgramieToolStripMenuItem.Size = new System.Drawing.Size(301, 26);
             this.oProgramieToolStripMenuItem.Text = "O programie";
             this.oProgramieToolStripMenuItem.Click += new System.EventHandler(this.oProgramieToolStripMenuItem_Click);
+            // 
+            // schematWprowadzaniaDanychToolStripMenuItem
+            // 
+            this.schematWprowadzaniaDanychToolStripMenuItem.Name = "schematWprowadzaniaDanychToolStripMenuItem";
+            this.schematWprowadzaniaDanychToolStripMenuItem.Size = new System.Drawing.Size(301, 26);
+            this.schematWprowadzaniaDanychToolStripMenuItem.Text = "Schemat wprowadzania danych";
+            this.schematWprowadzaniaDanychToolStripMenuItem.Click += new System.EventHandler(this.SchematWprowadzaniaDanychToolStripMenuItem_Click);
             // 
             // label4
             // 
@@ -217,7 +226,7 @@
             this.IsCorrectButton.UseVisualStyleBackColor = true;
             this.IsCorrectButton.Click += new System.EventHandler(this.IsCorrectButton_Click);
             // 
-            // Form1
+            // MetodaNewtona
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -241,8 +250,8 @@
             this.Controls.Add(this.parametersTextBox);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "MetodaNewtona";
+            this.Text = "Metoda Newtona";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -270,6 +279,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox zeroPlaceTextBox;
         private System.Windows.Forms.Button IsCorrectButton;
+        private System.Windows.Forms.ToolStripMenuItem schematWprowadzaniaDanychToolStripMenuItem;
     }
 }
 

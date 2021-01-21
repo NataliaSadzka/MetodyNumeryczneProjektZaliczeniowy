@@ -12,7 +12,7 @@ namespace MetodyNumeryczneProjektZaliczeniowyTest
         {
             decimal[] functionParameters = new decimal[] { 2.0m, 1.0m };
             decimal x = 0.0m;
-            Form1 form = new Form1();
+            MetodaNewtona form = new MetodaNewtona();
 
             decimal result = form.CalculateFunctionValueAtX(functionParameters, x);
 
@@ -24,7 +24,7 @@ namespace MetodyNumeryczneProjektZaliczeniowyTest
         {
             decimal[] functionParameters = new decimal[] { 4.0m, 3.0m, 2.0m, 3.0m };
             decimal x = 1.0m;
-            Form1 form = new Form1();
+            MetodaNewtona form = new MetodaNewtona();
 
             decimal result = form.CalculateFunctionValueAtX(functionParameters, x);
 
@@ -36,7 +36,7 @@ namespace MetodyNumeryczneProjektZaliczeniowyTest
         {
             decimal[] functionParameters = new decimal[] { 2.0m, 4.0m, 6.0m };
             decimal x = 2.0m;
-            Form1 form = new Form1();
+            MetodaNewtona form = new MetodaNewtona();
 
             decimal result = form.CalculateFunctionValueAtX(functionParameters, x);
 
@@ -47,7 +47,7 @@ namespace MetodyNumeryczneProjektZaliczeniowyTest
         public void TestCalculateDerivative()
         {
             decimal[] functionParameters = new decimal[] { 4.0m, 2.0m, 5.0m };
-            Form1 form = new Form1();
+            MetodaNewtona form = new MetodaNewtona();
 
             decimal[] result = form.CalculateDerivative(functionParameters);
 
@@ -60,7 +60,7 @@ namespace MetodyNumeryczneProjektZaliczeniowyTest
         public void TestCalculateDerivative1()
         {
             decimal[] functionParameters = new decimal[] { -3.0m, 2.0m, 6.0m, 5.0m };
-            Form1 form = new Form1();
+            MetodaNewtona form = new MetodaNewtona();
 
             decimal[] result = form.CalculateDerivative(functionParameters);
 
@@ -78,7 +78,7 @@ namespace MetodyNumeryczneProjektZaliczeniowyTest
             decimal epsilon = 0.001m;
             decimal delta = 0.000001m;
             int iterations = 100;
-            Form1 form = new Form1();
+            MetodaNewtona form = new MetodaNewtona();
 
             decimal result = form.CalculateZeroPlace(functionParameters, startPointX, epsilon, delta, iterations);
 
@@ -93,7 +93,7 @@ namespace MetodyNumeryczneProjektZaliczeniowyTest
             decimal epsilon = 0.000001m;
             decimal delta = 0.001m;
             int iterations = 100;
-            Form1 form = new Form1();
+            MetodaNewtona form = new MetodaNewtona();
 
             decimal result = form.CalculateZeroPlace(functionParameters, startPointX, epsilon, delta, iterations);
 
@@ -107,7 +107,7 @@ namespace MetodyNumeryczneProjektZaliczeniowyTest
             decimal zeroPlace = 2.000001m;
             decimal epsilon = 0.01m;
 
-            Form1 form = new Form1();
+            MetodaNewtona form = new MetodaNewtona();
 
             bool result = form.IsResultCorrect(functionParameters, zeroPlace, epsilon);
 
@@ -121,11 +121,26 @@ namespace MetodyNumeryczneProjektZaliczeniowyTest
             decimal zeroPlace = 2.0m;
             decimal epsilon = 0.000001m;
 
-            Form1 form = new Form1();
+            MetodaNewtona form = new MetodaNewtona();
 
             bool result = form.IsResultCorrect(functionParameters, zeroPlace, epsilon);
 
             Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void TestCalculateTangent()
+        {
+            decimal[] derivativeFunctionParameters = new decimal[] { 2.0m, -2.0m };
+            decimal pointX = 3.0m;
+            decimal pointY = 4.0m;
+
+            decimal[] expectedResult = new decimal[] { 4.0m, -8.0m };
+
+            MetodaNewtona form = new MetodaNewtona();
+            decimal[] result = form.CalculateTangent(derivativeFunctionParameters, pointX, pointY);
+
+            CollectionAssert.AreEquivalent(expectedResult, result);
         }
     }
 }
