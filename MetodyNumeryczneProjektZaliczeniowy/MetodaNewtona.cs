@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -107,13 +108,16 @@ namespace MetodyNumeryczneProjektZaliczeniowy
                 logRichTextBox.Text += "Pochodna funkcji w potencjalnym miejscu zerowym " + fX1 + "\n";
 
                 decimal[] tangentParameters = CalculateTangent(derivativeParamters, x0, fX0);
-                Series series = prepareTangentSeries(tangentParameters, x0, "Styczna " + numberOfIteration);
+                Series series = PrepareTangentSeries(tangentParameters, x0, "Styczna " + numberOfIteration);
                 wykres.DrawFunctionChart(series);
 
                 if (Math.Abs(fX1) < delta) //sprawdzenie czy wartość funkcji od bieżącego przybliżenia miejsca zerowego jest mniejsza od przyjętej wartości delty
                 {
-                    MessageBox.Show("Zly punkt startowy");
-                    break;
+                    MessageBox.Show("Zły punkt startowy");
+                    logRichTextBox.Text += "Zły punkt startowy\n";
+                    logRichTextBox.Text += "Zakończono obliczenia " + "\n";
+
+                    return x0;
                 }
 
                 x1 = x0;
@@ -132,6 +136,7 @@ namespace MetodyNumeryczneProjektZaliczeniowy
             if (iterations == 0) //sprawdzenie czy osiągnięto maksymalną liczbę iteracji
             {
                 MessageBox.Show("Przekroczony limit obiegów");
+                logRichTextBox.Text += "Przekroczony limit obiegów\n";
             }
 
             logRichTextBox.Text += "\n";
@@ -171,7 +176,7 @@ namespace MetodyNumeryczneProjektZaliczeniowy
          * @param seriesName nazwa serii
          * @return seria danych do narysowania funkcji
          */
-        public Series prepareChartSeries(decimal[] functionParameters, decimal startingPointX, string seriesName)
+        public Series PrepareChartSeries(decimal[] functionParameters, decimal startingPointX, string seriesName)
         {
             Series series = new Series(seriesName);
             for (decimal i = startingPointX - 5.0m; i < startingPointX + 5.0m; i = i + 0.5m)
@@ -188,13 +193,31 @@ namespace MetodyNumeryczneProjektZaliczeniowy
          * @param seriesName nazwa serii
          * @return seria danych dla stycznej
          */
-        public Series prepareTangentSeries(decimal[] functionParameters, decimal startingPointX, string seriesName)
+        public Series PrepareTangentSeries(decimal[] functionParameters, decimal startingPointX, string seriesName)
         {
             Series series = new Series(seriesName);
             series.Color = Color.Red;
-            for (decimal i = startingPointX - 1.0m; i < startingPointX + 1.0m; i = i + 0.5m)
+            decimal fStartingPointX = CalculateFunctionValueAtX(functionParameters, startingPointX);
+            decimal valueAtX = fStartingPointX;
+            if ((functionParameters[0] > 0 && fStartingPointX < 0) || (functionParameters[0] < 0 && fStartingPointX > 0))
             {
-                series.Points.Add(new DataPoint((double)i, (double)CalculateFunctionValueAtX(functionParameters, i)));
+                series.Points.Add(new DataPoint((double) (startingPointX - 0.5m), (double)CalculateFunctionValueAtX(functionParameters, startingPointX - 0.5m)));
+                while (fStartingPointX * valueAtX > 0)
+                {
+                    valueAtX = CalculateFunctionValueAtX(functionParameters, startingPointX);
+                    series.Points.Add(new DataPoint((double)startingPointX, (double)CalculateFunctionValueAtX(functionParameters, startingPointX)));
+                    startingPointX += 0.5m;
+                }
+            } 
+            else
+            {
+                series.Points.Add(new DataPoint((double)(startingPointX + 0.5m), (double)CalculateFunctionValueAtX(functionParameters, startingPointX + 0.5m)));
+                while (fStartingPointX * valueAtX > 0)
+                {
+                    valueAtX = CalculateFunctionValueAtX(functionParameters, startingPointX);
+                    series.Points.Add(new DataPoint((double)startingPointX, (double)CalculateFunctionValueAtX(functionParameters, startingPointX)));
+                    startingPointX -= 0.5m;
+                }
             }
             return series;
         }
@@ -206,6 +229,7 @@ namespace MetodyNumeryczneProjektZaliczeniowy
         {
             try //obsługa błędów wprowadzanych danych
             {
+                wykres.ResetChart();
                 decimal epsilon = Decimal.Parse(epsilonTextBox.Text);
                 decimal delta = Decimal.Parse(deltaTextBox.Text);
                 int iterations = Int32.Parse(iterationsTextBox.Text);
@@ -214,15 +238,15 @@ namespace MetodyNumeryczneProjektZaliczeniowy
                 decimal zeroPlace = CalculateZeroPlace(functionParameters, pointX, epsilon, delta, iterations);
                 zeroPlaceTextBox.Text = zeroPlace.ToString();
                 
-                Series functionChartSeries = prepareChartSeries(functionParameters, pointX, "funkcja f(x)");
-
+                Series functionChartSeries = PrepareChartSeries(functionParameters, pointX, "funkcja f(x)");
+             
                 wykres.DrawFunctionChart(functionChartSeries);
                 wykres.Show();
             }
             catch (Exception ex)
             {
-            ObslugaBledow Uwaga = new ObslugaBledow();
-            Uwaga.Show();
+                ObslugaBledow Uwaga = new ObslugaBledow();
+                Uwaga.Show();
             }
         }
 
@@ -237,6 +261,9 @@ namespace MetodyNumeryczneProjektZaliczeniowy
             deltaTextBox.Text = "0,000001";
             iterationsTextBox.Text = "100";
             zeroPlaceTextBox.Clear();
+            logRichTextBox.Clear();
+
+            wykres.ResetChart();
         }
 
         /**
@@ -276,5 +303,45 @@ namespace MetodyNumeryczneProjektZaliczeniowy
             SchematObsługiBledow schematObslugiBledow = new SchematObsługiBledow();
             schematObslugiBledow.Show();
         }
+
+        /**
+         * Metoda umożliwiająca zapis zawartości logRichTextBox do pliku
+         */
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            MemoryStream userInput = new MemoryStream();
+
+            RichTextBox logRichTextBox = new RichTextBox();
+
+            userInput.Position = 0;
+            logRichTextBox.LoadFile(Text, RichTextBoxStreamType.PlainText);
+
+            logRichTextBox.SaveFile(userInput, RichTextBoxStreamType.PlainText);
+            userInput.WriteByte(13);
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+            saveFileDialog.CreatePrompt = true;
+            saveFileDialog.OverwritePrompt = true;
+
+            saveFileDialog.FileName = "MetodaNewtona";
+            saveFileDialog.DefaultExt = "txt";
+            saveFileDialog.Filter =
+                "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            saveFileDialog.InitialDirectory =
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            DialogResult result = saveFileDialog.ShowDialog();
+            Stream fileStream;
+
+            if (result == DialogResult.OK)
+            {
+                fileStream = saveFileDialog.OpenFile();
+                userInput.Position = 0;
+                userInput.WriteTo(fileStream);
+                fileStream.Close();
+            }
+        }     
     }
 }
+

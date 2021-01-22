@@ -48,6 +48,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.zeroPlaceTextBox = new System.Windows.Forms.TextBox();
             this.IsCorrectButton = new System.Windows.Forms.Button();
+            this.saveButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -103,7 +104,7 @@
             // 
             // calculateButton
             // 
-            this.calculateButton.Location = new System.Drawing.Point(151, 318);
+            this.calculateButton.Location = new System.Drawing.Point(144, 318);
             this.calculateButton.Name = "calculateButton";
             this.calculateButton.Size = new System.Drawing.Size(75, 35);
             this.calculateButton.TabIndex = 7;
@@ -149,7 +150,7 @@
             // 
             // resetButton
             // 
-            this.resetButton.Location = new System.Drawing.Point(354, 318);
+            this.resetButton.Location = new System.Drawing.Point(310, 318);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(75, 35);
             this.resetButton.TabIndex = 12;
@@ -218,13 +219,23 @@
             // 
             // IsCorrectButton
             // 
-            this.IsCorrectButton.Location = new System.Drawing.Point(249, 318);
+            this.IsCorrectButton.Location = new System.Drawing.Point(227, 318);
             this.IsCorrectButton.Name = "IsCorrectButton";
-            this.IsCorrectButton.Size = new System.Drawing.Size(83, 35);
+            this.IsCorrectButton.Size = new System.Drawing.Size(75, 35);
             this.IsCorrectButton.TabIndex = 18;
             this.IsCorrectButton.Text = "Sprawdź";
             this.IsCorrectButton.UseVisualStyleBackColor = true;
             this.IsCorrectButton.Click += new System.EventHandler(this.IsCorrectButton_Click);
+            // 
+            // saveButton
+            // 
+            this.saveButton.Location = new System.Drawing.Point(820, 383);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(75, 35);
+            this.saveButton.TabIndex = 19;
+            this.saveButton.Text = "Zapisz\r\n";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // MetodaNewtona
             // 
@@ -232,6 +243,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(917, 536);
+            this.Controls.Add(this.saveButton);
             this.Controls.Add(this.IsCorrectButton);
             this.Controls.Add(this.zeroPlaceTextBox);
             this.Controls.Add(this.label4);
@@ -280,6 +292,7 @@
         private System.Windows.Forms.TextBox zeroPlaceTextBox;
         private System.Windows.Forms.Button IsCorrectButton;
         private System.Windows.Forms.ToolStripMenuItem schematWprowadzaniaDanychToolStripMenuItem;
+        private System.Windows.Forms.Button saveButton;
     }
 }
 

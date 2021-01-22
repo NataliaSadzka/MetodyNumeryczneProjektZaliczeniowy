@@ -23,10 +23,8 @@ namespace MetodyNumeryczneProjektZaliczeniowy
         public Wykres()
         {
             InitializeComponent();
-            potentialZeroPlaces = new Series("Potencjalne miejsca zerowe");
-            potentialZeroPlaces.ChartType = SeriesChartType.Point;
-            potentialZeroPlaces.Color = Color.Green;
-            chart1.Series.Add(potentialZeroPlaces);
+            ResetChart();
+
             chart1.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
             chart1.ChartAreas[0].AxisY.ScaleView.Zoomable = true;
             chart1.MouseWheel += Chart1_MouseWheel;
@@ -108,6 +106,14 @@ namespace MetodyNumeryczneProjektZaliczeniowy
                 }
             }
             catch { }
+        }
+        public void ResetChart()
+        {
+            chart1.Series.Clear();
+            potentialZeroPlaces = new Series("Potencjalne miejsca zerowe");
+            potentialZeroPlaces.ChartType = SeriesChartType.Point;
+            potentialZeroPlaces.Color = Color.Green;
+            chart1.Series.Add(potentialZeroPlaces);
         }
     }
 }
