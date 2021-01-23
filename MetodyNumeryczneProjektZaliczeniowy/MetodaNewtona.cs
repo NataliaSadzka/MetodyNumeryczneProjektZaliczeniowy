@@ -108,8 +108,12 @@ namespace MetodyNumeryczneProjektZaliczeniowy
                 logRichTextBox.Text += "Pochodna funkcji w potencjalnym miejscu zerowym " + fX1 + "\n";
 
                 decimal[] tangentParameters = CalculateTangent(derivativeParamters, x0, fX0);
-                Series series = PrepareTangentSeries(tangentParameters, x0, "Styczna " + numberOfIteration);
-                wykres.DrawFunctionChart(series);
+
+                if (functionParameters.Length > 1) // nie wyliczymy stycznej dla stałej tak żeby przecięła oś X
+                {
+                    Series series = PrepareTangentSeries(tangentParameters, x0, "Styczna " + numberOfIteration);
+                    wykres.DrawFunctionChart(series);
+                }                
 
                 if (Math.Abs(fX1) < delta) //sprawdzenie czy wartość funkcji od bieżącego przybliżenia miejsca zerowego jest mniejsza od przyjętej wartości delty
                 {
@@ -209,7 +213,7 @@ namespace MetodyNumeryczneProjektZaliczeniowy
                     startingPointX += 0.5m;
                 }
             } 
-            else
+            else if ((functionParameters[0] > 0 && fStartingPointX > 0) || (functionParameters[0] < 0 && fStartingPointX < 0))
             {
                 series.Points.Add(new DataPoint((double)(startingPointX + 0.5m), (double)CalculateFunctionValueAtX(functionParameters, startingPointX + 0.5m)));
                 while (fStartingPointX * valueAtX > 0)
@@ -218,6 +222,11 @@ namespace MetodyNumeryczneProjektZaliczeniowy
                     series.Points.Add(new DataPoint((double)startingPointX, (double)CalculateFunctionValueAtX(functionParameters, startingPointX)));
                     startingPointX -= 0.5m;
                 }
+            } else
+            {
+                series.Points.Add(new DataPoint((double)(startingPointX + 0.5m), (double)CalculateFunctionValueAtX(functionParameters, startingPointX + 0.5m)));
+                series.Points.Add(new DataPoint((double)(startingPointX), (double)CalculateFunctionValueAtX(functionParameters, startingPointX)));
+                series.Points.Add(new DataPoint((double)(startingPointX - 0.5m), (double)CalculateFunctionValueAtX(functionParameters, startingPointX - 0.5m)));
             }
             return series;
         }
@@ -311,10 +320,7 @@ namespace MetodyNumeryczneProjektZaliczeniowy
         {
             MemoryStream userInput = new MemoryStream();
 
-            RichTextBox logRichTextBox = new RichTextBox();
-
             userInput.Position = 0;
-            logRichTextBox.LoadFile(Text, RichTextBoxStreamType.PlainText);
 
             logRichTextBox.SaveFile(userInput, RichTextBoxStreamType.PlainText);
             userInput.WriteByte(13);
